@@ -13,9 +13,11 @@ public class MainManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI _scoreText;
     [SerializeField] GameObject _gameOverText;
+    [SerializeField] TextMeshProUGUI _highScoreText;
 
     private bool m_Started = false;
     private int m_Points;
+    private int _highScore;
 
     private bool m_GameOver = false;
 
@@ -39,6 +41,10 @@ public class MainManager : MonoBehaviour
         }
 
         _gameOverText.SetActive(false);
+
+        _highScore = PlayerPrefs.GetInt("High Score");
+        SaveAndGetData.Instance.ShowData();
+        _highScoreText.SetText("Current High Score : " + PlayerPrefs.GetString("Player Name") + " : " + PlayerPrefs.GetInt("High Score"));
     }
 
     private void Update()
@@ -63,6 +69,12 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+
+        if (_highScore < m_Points)
+        {
+            _highScore = m_Points;
+            SetHighScore();
+        }
     }
 
     void AddPoint(int point)
@@ -75,5 +87,11 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         _gameOverText.SetActive(true);
+    }
+
+    void SetHighScore()
+    {
+        PlayerPrefs.SetInt("High Score", _highScore);
+        PlayerPrefs.SetString("Player Name", SaveAndGetData.Instance.PreviewName);
     }
 }
