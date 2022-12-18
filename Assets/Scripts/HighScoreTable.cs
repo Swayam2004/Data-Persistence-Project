@@ -20,7 +20,7 @@ public class HighScoreTable : MonoBehaviour
 
         string jsonString = PlayerPrefs.GetString("HighScoreTable");
         HighScores highScores = JsonUtility.FromJson<HighScores>(jsonString);
-        
+
         // Sort entry list by score
         for (int i = 0; i < highScores.HighScoreEntryList.Count; i++)
         {
@@ -74,14 +74,14 @@ public class HighScoreTable : MonoBehaviour
         entryTransform.Find("posText").GetComponent<TextMeshProUGUI>().text = rankString;
 
         int score = highScoreEntry.Score;
-        entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().text = score.ToString();
+        entryTransform.Find("scoreText").GetComponent<TextMeshProUGUI>().text = score.ToString();
 
         string name = highScoreEntry.Name;
-        entryTransform.Find("scoreText").GetComponent<TextMeshProUGUI>().text = name;
+        entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().text = name;
 
         entryTransform.Find("background").gameObject.SetActive(rank % 2 == 1);
 
-        if(rank == 1)
+        if (rank == 1)
         {
             entryTransform.Find("nameText").GetComponent<TextMeshProUGUI>().color = Color.green;
             entryTransform.Find("posText").GetComponent<TextMeshProUGUI>().color = Color.green;
